@@ -188,14 +188,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 907ef3690cf8ce04eb903c5edf7716cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followedObj: {fileID: 1264465720}
-  lerpOffset: 0.1
-  lerpVelocity: 10
+  lerpOffset: 0.05
+  lerpVelocity: 20
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -348,6 +348,8 @@ GameObject:
   - component: {fileID: 1264465718}
   - component: {fileID: 1264465717}
   - component: {fileID: 1264465721}
+  - component: {fileID: 1264465722}
+  - component: {fileID: 1264465724}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -483,6 +485,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerVelocity: 10
+--- !u!114 &1264465722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264465716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11d76220e4f59204085233a2d4138210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jummpForce: 100
+  gravityForce: 50
+  jumpTime: 2
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &1264465724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264465716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59c53bc11218b54690a33f5cbf64d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordPivot: {fileID: 467974676}
+  attackVelocity: 20
+  attackDuration: 2
 --- !u!1 &1631822004
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +611,7 @@ GameObject:
   - component: {fileID: 1692592821}
   - component: {fileID: 1692592820}
   - component: {fileID: 1692592822}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

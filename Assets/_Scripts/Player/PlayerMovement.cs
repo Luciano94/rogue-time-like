@@ -10,10 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [Range (0.1f, 200.0f)]
     public float PlayerVelocity = 10.0f;
 
-    private float axisValue = 0.0f;
+    private float axisValueX = 0.0f;
     private Vector3 moveVector = Vector3.zero;
     private Transform playerTransform;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         if(playerTransform == null)
@@ -22,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         AxisListener();
@@ -32,18 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void AxisListener()
     {
-        axisValue = Input.GetAxis("Horizontal");
+        axisValueX = Input.GetAxis("Horizontal");
     }
 
     private void Facing()
     {
-        if(axisValue != 0)
+        if(axisValueX != 0)
         {
-            if(axisValue < 0)
+            if(axisValueX < 0)
             {
                 playerTransform.rotation = new Quaternion(0, 180, 0, 0);
             }
-            else if(axisValue > 0)
+            else if(axisValueX > 0)
             {
                 playerTransform.rotation = new Quaternion(0, 0, 0, 0);
             }
@@ -52,9 +53,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        if (axisValue != 0)
+        if (axisValueX != 0)
         {
-            moveVector.x = Mathf.Abs(axisValue * PlayerVelocity * Time.deltaTime);
+            moveVector.x = Mathf.Abs(axisValueX * PlayerVelocity * Time.deltaTime);
             playerTransform.Translate(moveVector);
         }
     }
