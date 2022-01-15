@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform followedObj;
-    public float lerpOffset = 0.1f;
+    public float lerpOffset = 0.5f;
     public float lerpVelocity = 10.0f;
 
     private bool needToLerp = false;
@@ -36,7 +36,9 @@ public class CameraFollow : MonoBehaviour
 
         if (needToLerp)
         {
-            transform.Translate(Vector3.Lerp(transform.position, followedObj.position, lerpOffset * Time.deltaTime));
+            Vector3 newposition = Vector3.Lerp(transform.position, followedObj.position, lerpOffset);
+            newposition.z = transform.position.z;
+            transform.position = newposition;
         }
     }
 
