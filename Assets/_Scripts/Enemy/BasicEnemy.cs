@@ -2,8 +2,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public abstract class AData
+{
+    public Entity EntityRef;
+    public abstract IState GenerateInitializedBehaviour();
+}
+
 public abstract class Entity : MonoBehaviour
 {
+    protected Dictionary<AData, IState> states = new Dictionary<AData, IState>();
+    protected IState CurrState { get; private set; }
+
+    protected void ChangeCurrentState(AData data)
+    {
+        CurrState?.OnExit();
+        CurrState = states[data];
+        CurrState?.OnEnter();
+    }
+
     public bool FacingRight
     {
         get => transform.localScale.x > 0;
@@ -14,25 +30,20 @@ public abstract class Entity : MonoBehaviour
             transform.localScale = scale;
         }
     }
+    public void AddState(AData data) {
+        states.Add(data, data.GenerateInitializedBehaviour());
+    }
 }
 
 public class BasicEnemy : Entity
 {
     public Vision EntityVision;
     public Patrol.Data PatrolData;
-    private IState currState;
-
-    private void ChangeCurrentState<T>(Action<T> init) where T : IState, new()
-    {
-        currState?.OnExit();
-        currState = new T();
-        init?.Invoke((T)currState);
-        currState?.OnEnter();
-    }
 
     private void Awake()
     {
-        ChangeCurrentState<Patrol>(patrol => patrol.Init(PatrolData));
+        AddState(PatrolData);
+        ChangeCurrentState(PatrolData);
     }
 
 
@@ -43,12 +54,12 @@ public class BasicEnemy : Entity
             Debug.LogError("Targetted");
         }
 
-        currState.Update();
+        CurrState.Update();
     }
 
     
     private void FixedUpdate()
     {
-        currState.Update();
+        CurrState.Update();
     }
 }

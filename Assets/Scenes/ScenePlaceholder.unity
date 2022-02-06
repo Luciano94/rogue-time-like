@@ -1137,9 +1137,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EntityVision: {fileID: 742630951}
   PatrolData:
+    EntityRef: {fileID: 1602576123}
     Range: 3
     Speed: 1
-    entity: {fileID: 1602576123}
 --- !u!50 &1602576124
 Rigidbody2D:
   serializedVersion: 4

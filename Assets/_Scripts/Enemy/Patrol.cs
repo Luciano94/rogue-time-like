@@ -3,11 +3,17 @@ using UnityEngine;
 public class Patrol : IState
 {
     [System.Serializable]
-    public class Data
+    public class Data : AData
     {
         public float Range;
         public float Speed;
-        public Entity entity;
+
+        public override IState GenerateInitializedBehaviour() {
+            Patrol patrol = new Patrol();
+            patrol.Init(this);
+
+            return patrol;
+        }
     }
 
     private Data data;
@@ -26,7 +32,7 @@ public class Patrol : IState
 
     public void OnEnter()
     {
-        initPosX = data.entity.transform.position.x;
+        initPosX = data.EntityRef.transform.position.x;
     }
 
     public void OnExit()
@@ -37,20 +43,20 @@ public class Patrol : IState
     {
         float distance = data.Speed * Time.deltaTime;
 
-        if (!data.entity.FacingRight)
+        if (!data.EntityRef.FacingRight)
         {
             distance *= -1f;
         }
 
-        data.entity.transform.Translate(Vector3.right * distance);
+        data.EntityRef.transform.Translate(Vector3.right * distance);
 
-        if (data.entity.transform.position.x > initPosX + halfRange)
+        if (data.EntityRef.transform.position.x > initPosX + halfRange)
         {
-            data.entity.FacingRight = false;
+            data.EntityRef.FacingRight = false;
         }
-        else if (data.entity.transform.position.x < initPosX - halfRange)
+        else if (data.EntityRef.transform.position.x < initPosX - halfRange)
         {
-            data.entity.FacingRight = true;
+            data.EntityRef.FacingRight = true;
         }
     }
 }
