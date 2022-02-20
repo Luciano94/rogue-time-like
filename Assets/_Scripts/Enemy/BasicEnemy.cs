@@ -16,6 +16,11 @@ public abstract class Entity : MonoBehaviour
     protected void ChangeCurrentState(AData data)
     {
         CurrState?.OnExit();
+
+        if (!states.ContainsKey(data)) {
+            states.Add(data, data.GenerateInitializedBehaviour());
+        }
+
         CurrState = states[data];
         CurrState?.OnEnter();
     }
@@ -30,28 +35,29 @@ public abstract class Entity : MonoBehaviour
             transform.localScale = scale;
         }
     }
-    public void AddState(AData data) {
-        states.Add(data, data.GenerateInitializedBehaviour());
-    }
 }
 
 public class BasicEnemy : Entity
 {
     public Vision EntityVision;
     public Patrol.Data PatrolData;
+    public Chase.Data ChaseData;
 
     private void Awake()
     {
-        AddState(PatrolData);
         ChangeCurrentState(PatrolData);
     }
 
 
     private void Update()
     {
-        if (EntityVision.IsTargetOnSight)
+        if ((CurrState is Patrol) && EntityVision.IsTargetOnSight)
         {
-            Debug.LogError("Targetted");
+            ChangeCurrentState(ChaseData);
+        }
+        else if ((CurrState is Chase chase) && chase.LostTrack)
+        {
+            ChangeCurrentState(PatrolData);
         }
 
         CurrState.Update();

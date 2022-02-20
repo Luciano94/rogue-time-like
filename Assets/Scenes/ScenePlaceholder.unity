@@ -1140,6 +1140,11 @@ MonoBehaviour:
     EntityRef: {fileID: 1602576123}
     Range: 3
     Speed: 1
+  ChaseData:
+    EntityRef: {fileID: 1602576123}
+    ChaseSpeed: 1
+    StopChasingFrame: 2
+    Vision: {fileID: 742630951}
 --- !u!50 &1602576124
 Rigidbody2D:
   serializedVersion: 4
